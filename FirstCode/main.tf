@@ -13,21 +13,11 @@ provider "aws" {
   shared_credentials_file = "/Users/saeid_000/.aws/credentials"
 }
 
-# resource "aws_instance" "TerraformEC2Instance_01" {
-#   # ami           = "ami-0d5eff06f840b45e9" # us-east-1
-#   ami = "ami-09e67e426f25ce0d7"
-#   instance_type = "t2.micro"
-#   tags = {
-#     Name = "TerraformInstance-01"
-#     Environmenmt = "Test"
-#   }
-
-# }
 
 
 variable "subnet_prefix" {
-  # type        = string
-  # default     = ""
+   type        = string
+   default     = ""
   description = "cider block for the subnet"
 }
 
@@ -156,10 +146,10 @@ resource "aws_network_interface" "test-webserver-nic" {
   private_ips     = ["10.0.1.50"]
   security_groups = [aws_security_group.allow_web.id]
 
-  # attachment {
-  #   instance     = aws_instance.test.id
-  #   device_index = 1
-  # }
+  attachment {
+    instance     = aws_instance.test.id
+    device_index = 1
+  }
 }
 
 # Create an Elastic IP and assign to the network interface
@@ -175,8 +165,8 @@ resource "aws_eip" "test-EIP-one" {
 resource "aws_instance" "web-server-instance" {
   ami           = "ami-09e67e426f25ce0d7"
   instance_type = "t2.micro"
-  # vpc_id     = aws_vpc.test-vpc.id
-  # subnet_id       = aws_subnet.test-subnet-1.id
+  vpc_id     = aws_vpc.test-vpc.id
+  subnet_id       = aws_subnet.test-subnet-1.id
   availability_zone = "us-east-1a"
   key_name          = "EC2 Tutorial"
   network_interface {
