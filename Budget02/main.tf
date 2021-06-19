@@ -11,23 +11,15 @@ provider "aws" {
   region = "us-east-1"
 }
 
-# module "child" {
-#     source=".//child"
-# }
-
-
-resource "random_pet" "name" {    
+module "child" {
+    source=".//child"
 }
 
-resource "random_integer" "number" {
-    min=10
-    max=99
-}
 
 
 resource "aws_budgets_budget" "monthly-budget" {
   # ...
-  name              = "monthly-budget-${random_pet.name.id}-${random_integer.number.result}"
+  name              = "monthly-budget-${module.child.pet-name}-${module.child.number-result}"
   budget_type       = "COST"
   limit_amount      = "12"
   limit_unit        = "USD"
